@@ -1,4 +1,5 @@
-﻿using Crud.Core.Domain.RepositoryContract;
+﻿using Crud.Core;
+using Crud.Core.Domain.RepositoryContract;
 using Crud.Core.Model;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -10,75 +11,46 @@ using System.Threading.Tasks;
 
 namespace Crud.Infrastructure.Repositories
 {
-    public class GenericRepository : IGenericRepository
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly IConfiguration _configuration;
         private readonly MongoClient _mongoConnection;
-        private readonly IMongoCollection<InsertRecordRequest> _booksCollection;
+        private readonly IMongoCollection<T> _collection;
 
         public GenericRepository(IConfiguration configuration)
         {
             _configuration = configuration;
-            _mongoConnection = new MongoClient(_configuration["BookStoreDatabase:ConnectionString"]);
-            var MongoDataBase = _mongoConnection.GetDatabase(_configuration["BookStoreDatabase:DatabaseName"]);
-            _booksCollection = MongoDataBase.GetCollection<InsertRecordRequest>(_configuration["BookStoreDatabase:BooksCollectionName"]);
+            _mongoConnection = new MongoClient(_configuration[Constants.MongoDBSettings.ConnectionString]);
+            var MongoDataBase = _mongoConnection.GetDatabase(_configuration[Constants.MongoDBSettings.DatabaseName]);
+            _collection = MongoDataBase.GetCollection<T>(_configuration[Constants.MongoDBSettings.CollectionName]);
         }
 
-        public Task<DeleteAllRecordResponse> DeleteAllRecord()
+        public async Task<List<T>> GetAll()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<DeleteRecordByIdResponse> DeleteRecordById(DeleteRecordByIdRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<GetAllRecordResponse> GetAllRecord()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<GetRecordByIdResponse> GetRecordById(string ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<GetRecordByNameResponse> GetRecordByName(string Name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<InsertRecordResponse> InsertRecord(InsertRecordRequest request)
-        {
-            InsertRecordResponse response = new InsertRecordResponse();
-            response.IsSuccess = true;
-            response.Message = "Data Successfully Insert";
-
             try
             {
-                request.CreatedDate = DateTime.Now.ToString(); // Insert Current Time
-                request.UpdatedDate = string.Empty;
-                await _booksCollection.InsertOneAsync(request);
-
+                return await _collection.Find(x => true).ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
-                response.IsSuccess = false;
-                response.Message = "Exception Occurs : " + ex.Message;
+                throw;
+            }
+        }
+
+        public async Task<bool> Insert(T request)
+        {
+            var result = false;
+            try
+            {
+                await _collection.InsertOneAsync(request);
+                result = true;
+            }
+            catch
+            {
+                throw;
             }
 
-            return response;
-        }
-
-        public Task<UpdateRecordByIdResponse> UpdateRecordById(InsertRecordRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UpdateRecordByIdResponse> UpdateSalaryById(UpdateSalaryByIdRequest request)
-        {
-            throw new NotImplementedException();
+            return result;
         }
     }
 }

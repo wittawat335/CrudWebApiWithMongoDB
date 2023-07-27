@@ -2,27 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Crud.Core.Domain.RepositoryContract
 {
-    public interface IGenericRepository
+    public interface IGenericRepository<T> where T : class
     {
-        Task<InsertRecordResponse> InsertRecord(InsertRecordRequest request);
+        Task<bool> Insert(T request);
 
-        Task<GetAllRecordResponse> GetAllRecord();
+        Task<List<T>> GetAll();
 
-        Task<GetRecordByIdResponse> GetRecordById(string ID);
+        //Task<T> GetById(string ID);
 
-        Task<GetRecordByNameResponse> GetRecordByName(string Name);
+        //Task<T> GetByName(string Name);
 
-        Task<UpdateRecordByIdResponse> UpdateRecordById(InsertRecordRequest request);
+        //Task<T> UpdateById(T request);
 
-        Task<UpdateRecordByIdResponse> UpdateSalaryById(UpdateSalaryByIdRequest request);
+        //Task<T> UpdateSalaryById(T request);
 
-        Task<DeleteRecordByIdResponse> DeleteRecordById(DeleteRecordByIdRequest request);
+        //Task<T> DeleteById(T request);
 
-        Task<DeleteAllRecordResponse> DeleteAllRecord();
+        //Task<T> DeleteAll();
     }
 }

@@ -30,10 +30,9 @@ namespace Crud.Core.Model
         [Required]
         public double Salary { get; set; }
     }
-
     public class InsertRecordResponse
     {
         public bool IsSuccess { get; set; }
-        public string? Message { get; set; }
+        public string Message { get; set; }
     }
 }

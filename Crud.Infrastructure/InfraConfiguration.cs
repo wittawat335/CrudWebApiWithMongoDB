@@ -9,8 +9,9 @@ namespace Crud.Infrastructure
     {
         public static void InjectDependence(this IServiceCollection services, IConfiguration configuration)
         {
-        
-            services.AddScoped<IGenericRepository, GenericRepository>();
+
+            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IDemoRepository, DemoRepository>();
         }
     }
 }
