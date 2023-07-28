@@ -18,6 +18,7 @@ namespace Crud.Core.Utility
             public struct CollectionName
             {
                 public const string UserDetails = "MongoDBSetting:CollectionName:UserDetails";
+                public const string Role = "Role";
             }
         }
 

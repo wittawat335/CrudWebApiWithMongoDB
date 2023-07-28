@@ -1,6 +1,6 @@
 ﻿using Crud.Core;
 using Crud.Core.Domain.RepositoryContract;
-using Crud.Core.Interface;
+using Crud.Core.Model.MongoDB.Interfaces;
 using Crud.Core.Model.MongoDB;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -29,17 +29,16 @@ namespace Crud.Infrastructure.Repositories
             return _collection.AsQueryable();
         }
 
-        public virtual IEnumerable<TDocument> FilterBy(
-            Expression<Func<TDocument, bool>> filterExpression)
+        public virtual List<TDocument> FilterBy(Expression<Func<TDocument, bool>> filterExpression)
         {
-            return _collection.Find(filterExpression).ToEnumerable();
+            return _collection.Find(filterExpression).ToList();
         }
 
-        public virtual IEnumerable<TProjected> FilterBy<TProjected>(
+        public virtual List<TProjected> FilterBy<TProjected>(
             Expression<Func<TDocument, bool>> filterExpression,
             Expression<Func<TDocument, TProjected>> projectionExpression)
         {
-            return _collection.Find(filterExpression).Project(projectionExpression).ToEnumerable();
+            return _collection.Find(filterExpression).Project(projectionExpression).ToList();
         }
 
         public virtual TDocument FindOne(Expression<Func<TDocument, bool>> filterExpression)

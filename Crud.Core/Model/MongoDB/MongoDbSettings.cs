@@ -1,4 +1,5 @@
-﻿using Crud.Core.Interface;
+﻿
+using Crud.Core.Model.MongoDB.Interfaces;
 
 namespace Crud.Core.Model.MongoDB
 {

@@ -1,4 +1,4 @@
-﻿using Crud.Core.Interface;
+﻿using Crud.Core.Model.MongoDB.Interfaces;
 using System.Linq.Expressions;
 
 namespace Crud.Core.Domain.RepositoryContract
@@ -7,11 +7,9 @@ namespace Crud.Core.Domain.RepositoryContract
     {
         IQueryable<TDocument> AsQueryable();
 
-        IEnumerable<TDocument> FilterBy(
-            Expression<Func<TDocument, bool>> filterExpression);
+        List<TDocument> FilterBy(Expression<Func<TDocument, bool>> filterExpression);
 
-        IEnumerable<TProjected> FilterBy<TProjected>(
-            Expression<Func<TDocument, bool>> filterExpression,
+        List<TProjected> FilterBy<TProjected>(Expression<Func<TDocument, bool>> filterExpression,
             Expression<Func<TDocument, TProjected>> projectionExpression);
 
         TDocument FindOne(Expression<Func<TDocument, bool>> filterExpression);

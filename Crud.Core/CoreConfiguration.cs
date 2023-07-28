@@ -8,7 +8,8 @@ namespace Crud.Core
     {
         public static void RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<IDemoService, DemoService>();
+            services.AddScoped<ITestService, TestService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
     }
 }

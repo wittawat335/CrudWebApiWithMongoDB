@@ -1,4 +1,4 @@
-﻿using Crud.Core.Interface;
+﻿using Crud.Core.Model.MongoDB.Interfaces;
 using MongoDB.Bson;
 
 namespace Crud.Core.Model.MongoDB

@@ -1,7 +1,12 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Crud.Core.Interface
+namespace Crud.Core.Model.MongoDB.Interfaces
 {
     public interface IDocument
     {

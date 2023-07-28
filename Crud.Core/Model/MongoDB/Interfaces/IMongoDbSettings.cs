@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Core.Interface
+namespace Crud.Core.Model.MongoDB.Interfaces
 {
     public interface IMongoDbSettings
     {
