@@ -1,11 +1,12 @@
-﻿using Crud.Core;
-using Crud.Core.Domain.RepositoryContract;
+﻿using Crud.Core.Domain.RepositoryContract;
 using Crud.Core.Model;
+using Crud.Core.Utility;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,9 +22,11 @@ namespace Crud.Infrastructure.Repositories
         {
             _configuration = configuration;
             _mongoConnection = new MongoClient(_configuration[Constants.MongoDBSettings.ConnectionString]);
-            var MongoDataBase = _mongoConnection.GetDatabase(_configuration[Constants.MongoDBSettings.DatabaseName]);
-            _collection = MongoDataBase.GetCollection<T>(_configuration[Constants.MongoDBSettings.CollectionName]);
+            var MongoDataBase = _mongoConnection.GetDatabase(_configuration[Constants.MongoDBSettings.DatabaseName.CrudDB]);
+            _collection = MongoDataBase.GetCollection<T>(_configuration[Constants.MongoDBSettings.CollectionName.UserDetails]);
         }
+
+       
 
         public async Task<List<T>> GetAll()
         {

@@ -1,20 +1,12 @@
-﻿using Crud.Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace Crud.Core.Domain.RepositoryContract
 {
     public interface IGenericRepository<T> where T : class
     {
         Task<bool> Insert(T request);
-
         Task<List<T>> GetAll();
-
-        //Task<T> GetById(string ID);
+       
 
         //Task<T> GetByName(string Name);
 

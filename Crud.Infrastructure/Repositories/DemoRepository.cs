@@ -1,14 +1,9 @@
-﻿using Crud.Core;
-using Crud.Core.Domain.RepositoryContract;
+﻿using Crud.Core.Domain.RepositoryContract;
 using Crud.Core.Model;
+using Crud.Core.Utility;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crud.Infrastructure.Repositories
 {
@@ -21,9 +16,9 @@ namespace Crud.Infrastructure.Repositories
         {
             _configuration = configuration;
             _mongoConnection = new MongoClient(_configuration[Constants.MongoDBSettings.ConnectionString]);
-            var MongoDataBase = _mongoConnection.GetDatabase(_configuration[Constants.MongoDBSettings.DatabaseName]);
+            var MongoDataBase = _mongoConnection.GetDatabase(_configuration[Constants.MongoDBSettings.DatabaseName.CrudDB]);
             _collection = MongoDataBase
-                .GetCollection<InsertRecordRequest>(_configuration[Constants.MongoDBSettings.CollectionName]);
+                .GetCollection<InsertRecordRequest>(_configuration[Constants.MongoDBSettings.CollectionName.UserDetails]);
         }
         public async Task<GetAllRecordResponse> GetAllRecord()
         {
@@ -122,7 +117,7 @@ namespace Crud.Infrastructure.Repositories
 
             try
             {
-                GetRecordByIdResponse GetResponse = await GetRecordById(request.Id);
+                GetRecordByIdResponse GetResponse = await GetRecordById(request.Id); // Find ID for Update
                 if (!GetResponse.IsSuccess)
                 {
                     response.IsSuccess = false;
@@ -133,7 +128,7 @@ namespace Crud.Infrastructure.Repositories
                 request.CreatedDate = GetResponse.data.CreatedDate;
                 request.UpdatedDate = DateTime.Now.ToString();
 
-                var Result = await _collection.ReplaceOneAsync(x => x.Id == request.Id, request);
+                var Result = await _collection.ReplaceOneAsync(x => x.Id == request.Id, request); //Update Data
                 if (!Result.IsAcknowledged)
                 {
                     response.Message = "Input Id Not Found / Updation Not Occurs";

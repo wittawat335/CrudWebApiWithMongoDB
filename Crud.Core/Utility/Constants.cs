@@ -4,16 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Core
+namespace Crud.Core.Utility
 {
     public static class Constants
     {
         public struct MongoDBSettings
         {
             public const string ConnectionString = "MongoDBSetting:ConnectionString";
-            public const string DatabaseName = "MongoDBSetting:DatabaseName";
-            public const string CollectionName = "MongoDBSetting:CollectionName";
+            public struct DatabaseName
+            {
+                public const string CrudDB = "MongoDBSetting:DatabaseName:CrudDB";
+            }
+            public struct CollectionName
+            {
+                public const string UserDetails = "MongoDBSetting:CollectionName:UserDetails";
+            }
         }
+
         public struct Msg
         {
             public const string Complete = "Data Successfully Insert";
