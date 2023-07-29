@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 namespace Crud.Core.Services
 {
-    [Authorize]
     public class RoleService : IRoleService
     {
         private readonly IMongoRepository<Role> _repository;

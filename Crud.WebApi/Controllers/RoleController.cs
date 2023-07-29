@@ -1,10 +1,12 @@
 ﻿using Crud.Core.DTOs;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.WebApi.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase

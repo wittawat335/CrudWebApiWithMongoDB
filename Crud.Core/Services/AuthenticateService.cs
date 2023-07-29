@@ -132,7 +132,7 @@ namespace Crud.Core.Services
                     {
                         //user is created...
                         //then add user to a role...
-                        var addUserToRoleResult = await _userManager.AddToRoleAsync(userExists, "Administrator");
+                        var addUserToRoleResult = await _userManager.AddToRoleAsync(userExists, "Manager");
                         if (!addUserToRoleResult.Succeeded)
                         {
                             response.Message = $"Create user succeeded but could not add user to role {addUserToRoleResult?.Errors?.First()?.Description}";
