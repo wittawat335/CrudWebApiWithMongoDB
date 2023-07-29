@@ -29,6 +29,12 @@ namespace Crud.Infrastructure.Repositories
             return _collection.AsQueryable();
         }
 
+        public virtual async Task<List<TDocument>> GetAll()
+        {
+            var list = await _collection.Find(Builders<TDocument>.Filter.Empty).ToListAsync();
+            return list;
+        }
+
         public virtual List<TDocument> FilterBy(Expression<Func<TDocument, bool>> filterExpression)
         {
             return _collection.Find(filterExpression).ToList();
@@ -138,5 +144,6 @@ namespace Crud.Infrastructure.Repositories
         {
             return Task.Run(() => _collection.DeleteManyAsync(filterExpression));
         }
+
     }
 }

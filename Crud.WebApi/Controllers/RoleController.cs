@@ -1,4 +1,5 @@
-﻿using Crud.Core.Model.MongoDB.Collections;
+﻿using Crud.Core.DTOs;
+using Crud.Core.Model.MongoDB.Collections;
 using Crud.Core.Model.MongoDB.ViewModels;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
@@ -17,13 +18,30 @@ namespace Crud.WebApi.Controllers
             _service = service;
         }
 
-        [HttpPost("getList")]
-        public IActionResult GetList()
+        [HttpGet("getList")]
+        public async Task<IActionResult> GetList()
         {
-            var response = new ResponseList<Role>();
+            var response = new ResponseList<RoleDTO>();
             try
             {
-                response = _service.GetList();
+                response = await _service.GetAll();
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet("getRoleById")]
+        public async Task<IActionResult> GetRoleById(string id)
+        {
+            var response = new ResponseTable<RoleDTO>();
+            try
+            {
+                response = await _service.GetRoleById(id);
             }
             catch (Exception ex)
             {
@@ -35,7 +53,7 @@ namespace Crud.WebApi.Controllers
         }
 
         [HttpPost("addRole")]
-        public async Task<IActionResult> AddRole(RoleViewModel model)
+        public async Task<IActionResult> AddRole(RoleDTO model)
         {
             var response = new Response();
             try

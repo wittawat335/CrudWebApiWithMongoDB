@@ -11,12 +11,10 @@ namespace Crud.WebApi.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly IDemoService _service;
         private readonly IDemoRepository _repository;
 
-        public HomeController(IDemoService service, IDemoRepository repository)
+        public HomeController(IDemoRepository repository)
         {
-            _service = service;
             _repository = repository;
         }
 

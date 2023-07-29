@@ -49,9 +49,9 @@ namespace Crud.WebApi.Controllers
         public IEnumerable<string> GetPeopleData()
         {
             var people = _peopleRepository.FilterBy(
-                filter => filter.FirstName != "test",
-                projection => projection.FirstName
-            );
+                filter => filter.FirstName != "rrr",
+                projection => projection.Id.ToString()
+            ); 
             return people;
         }
     }
