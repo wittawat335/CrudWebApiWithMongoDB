@@ -11,7 +11,7 @@ namespace Crud.Core.Services.Contracts
 {
     public interface IAuthenticateService
     {
-        Task<ResponseTable<LoginResponse>> LoginAsync(LoginRequest request);
+        Task<ResponseTable<LoginResponse>> LoginAsync(LoginRequest request, string key);
         Task<Response> RegisterAsync(RegisterRequest request);
         Task<Response> CreateRole(CreateRoleRequest request);
     }

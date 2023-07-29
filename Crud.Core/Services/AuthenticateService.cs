@@ -21,7 +21,8 @@ namespace Crud.Core.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public AuthenticateService(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public AuthenticateService(UserManager<ApplicationUser> userManager, 
+            RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -29,10 +30,23 @@ namespace Crud.Core.Services
 
         public async Task<Response> CreateRole(CreateRoleRequest request)
         {
-            throw new NotImplementedException();
+            var response = new Response();
+            try
+            {
+                var appRole = new ApplicationRole { RoleCode = request.RoleCode , Name = request.RoleName, IsActive = request.IsActive };
+                var createRole = await _roleManager.CreateAsync(appRole);
+
+                response.Message = "role created succesfully";
+                response.IsSuccess = true;
+            }
+            catch
+            {
+                throw;
+            }
+            return response;
         }
 
-        public async Task<ResponseTable<LoginResponse>> LoginAsync(LoginRequest request)
+        public async Task<ResponseTable<LoginResponse>> LoginAsync(LoginRequest request, string jwtKey)
         {
             var response = new ResponseTable<LoginResponse>();
             var loginResponse = new LoginResponse();
@@ -58,7 +72,7 @@ namespace Crud.Core.Services
                     var roleClaims = roles.Select(x => new Claim(ClaimTypes.Role, x));
                     claims.AddRange(roleClaims);
 
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1swek3u4uo2u4a6e"));
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
                     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                     var expires = DateTime.Now.AddMinutes(30);
 
@@ -73,10 +87,11 @@ namespace Crud.Core.Services
                     loginResponse.AccessToken = new JwtSecurityTokenHandler().WriteToken(token);
                     loginResponse.UserId = user?.Id.ToString();
                     loginResponse.Email = user?.Email;
+
+                    response.value = loginResponse;
+                    response.IsSuccess = true;
+                    response.Message = "Login Successful";
                 }
-                response.value = loginResponse;
-                response.IsSuccess = true;
-                response.Message = "Login Successful";
             }
             catch
             {
@@ -117,7 +132,7 @@ namespace Crud.Core.Services
                     {
                         //user is created...
                         //then add user to a role...
-                        var addUserToRoleResult = await _userManager.AddToRoleAsync(userExists, "USER");
+                        var addUserToRoleResult = await _userManager.AddToRoleAsync(userExists, "Administrator");
                         if (!addUserToRoleResult.Succeeded)
                         {
                             response.Message = $"Create user succeeded but could not add user to role {addUserToRoleResult?.Errors?.First()?.Description}";

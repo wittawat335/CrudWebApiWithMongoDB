@@ -2,11 +2,13 @@
 using Crud.Core.Model.MongoDB.Collections;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.WebApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase

@@ -22,6 +22,7 @@ namespace Crud.Core
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<ITestService, TestService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
         }
 
         public static void MongoDbIdentityConfig(this IServiceCollection services, IConfiguration configuration)

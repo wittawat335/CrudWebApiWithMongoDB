@@ -1,7 +1,7 @@
 ﻿using Crud.Core.DTOs;
 using Crud.Core.Model.MongoDB.Collections;
 using Crud.Core.Model.Response;
-using Microsoft.AspNetCore.Http;
+using Crud.Core.Services.Contracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +11,12 @@ namespace Crud.WebApi.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
-
-        public AuthenticationController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        private readonly IAuthenticateService _service;
+        private readonly IConfiguration _configuration;
+        public AuthenticationController(IAuthenticateService service, IConfiguration configuration)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
+            _service = service;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -25,6 +24,50 @@ namespace Crud.WebApi.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var response = new ResponseTable<LoginResponse>();
+            var key = _configuration.GetSection("AppSettings:JWT:key").Value;
+            try
+            {
+                response = await _service.LoginAsync(request, key);
+            }
+            catch (Exception ex) { 
+                response.Message = ex.Message;
+                response.IsSuccess = false;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            var response = new Response();
+            try
+            {
+                response = await _service.RegisterAsync(request);
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.IsSuccess = false;
+            }
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("roles/add")]
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleRequest request)
+        {
+            var response = new Response();
+            try
+            {
+                response = await _service.CreateRole(request);
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                response.IsSuccess = false;
+            }
             return Ok(response);
         }
     }

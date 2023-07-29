@@ -6,10 +6,12 @@ using Crud.Core.Model.MongoDB.ViewModels;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
 using Crud.Core.Utility;
+using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 
 namespace Crud.Core.Services
 {
+    [Authorize]
     public class RoleService : IRoleService
     {
         private readonly IMongoRepository<Role> _repository;
