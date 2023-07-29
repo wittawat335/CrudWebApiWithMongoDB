@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDBSetting")); //Setting MongoDB
 builder.Services.InjectDependence(builder.Configuration); // Infrastructure Config
 builder.Services.RegisterServices(); //Core Config
+builder.Services.MongoDbIdentityConfig(builder.Configuration); //Core Config
 
-//builder.Services.AddMvc(config => config.ModelBinderProviders.Insert(0, new ObjectIdBinderProvider()));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,7 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,13 +1,11 @@
 ﻿using Crud.Core.DTOs;
-using Crud.Core.Model.MongoDB.Collections;
-using Crud.Core.Model.MongoDB.ViewModels;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.WebApi.Controllers
 {
-    [Route("api/[controller]/[Action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase
     {

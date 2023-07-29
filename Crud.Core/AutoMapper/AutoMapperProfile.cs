@@ -19,6 +19,11 @@ namespace Crud.Core.AutoMapper
             CreateMap<RoleDTO, Role>().ForMember(
                 x => x.Id,
                 opt => opt.Ignore());
+            //CreateMap<LoginRequest, LoginResponse>()
+            // .ForMember(x =>
+            // x.RoleName,
+            // opt => opt.MapFrom(origin => origin.Role.Name)
+            // );
         }
     }
 }
