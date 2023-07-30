@@ -23,6 +23,7 @@ namespace Crud.Core
             services.AddScoped<ITestService, TestService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IAuthenticateService, AuthenticateService>();
+            services.AddScoped<IProductService, ProductService>();
         }
 
         public static void MongoDbIdentityConfig(this IServiceCollection services, IConfiguration configuration)

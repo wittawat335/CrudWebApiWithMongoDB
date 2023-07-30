@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.Core.Model.MongoDB.ViewModels
+namespace Crud.Core.DTOs
 {
-    public class RoleViewModel
+    public class ProductDTO
     {
-        public string? RoleName { get; set; }
+        public string? Id { get; set; }
+        public string? ProductName { get; set; }
+        public decimal? Price { get; set; }
+        public int? Stock { get; set; }
         public bool? IsActive { get; set; }
         public string? CreateBy { get; set; }
     }

@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using Crud.Core.DTOs;
 using Crud.Core.Model.MongoDB.Collections;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace Crud.Core.AutoMapper
 {
@@ -13,17 +9,15 @@ namespace Crud.Core.AutoMapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<Role, RoleDTO>().ForMember(
+            #region Products
+            CreateMap<Products, ProductDTO>().ForMember(
+               x => x.Id,
+               opt => opt.MapFrom(origin => origin.Id.ToString()));
+            CreateMap<ProductDTO, Products>().ForMember(
                 x => x.Id,
-                opt => opt.MapFrom(origin => origin.Id.ToString()));
-            CreateMap<RoleDTO, Role>().ForMember(
-                x => x.Id,
-                opt => opt.Ignore());
-            //CreateMap<LoginRequest, LoginResponse>()
-            // .ForMember(x =>
-            // x.RoleName,
-            // opt => opt.MapFrom(origin => origin.Role.Name)
-            // );
+                opt => opt.MapFrom(origin => new ObjectId(origin.Id)));
+            #endregion
+
         }
     }
 }

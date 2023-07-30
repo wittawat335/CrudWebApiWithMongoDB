@@ -33,7 +33,11 @@ namespace Crud.Core.Services
             var response = new Response();
             try
             {
-                var appRole = new ApplicationRole { RoleCode = request.RoleCode , Name = request.RoleName, IsActive = request.IsActive };
+                var appRole = new ApplicationRole { 
+                    RoleCode = request.RoleCode , 
+                    Name = request.RoleName, 
+                    IsActive = request.IsActive 
+                };
                 var createRole = await _roleManager.CreateAsync(appRole);
 
                 response.Message = "role created succesfully";
@@ -56,10 +60,18 @@ namespace Crud.Core.Services
                 if (user == null)
                 {
                     response.IsSuccess = false;
-                    response.Message = "Invalid email/password";
+                    response.Message = "Invalid email";
+                }
+                var verigyResult = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+                if (verigyResult == PasswordVerificationResult.Failed)
+                {
+                    //handle invalid login credentials...
+                    response.IsSuccess = false;
+                    response.Message = "Invalid password";
                 }
                 else
                 {
+                    //handle success login...
                     //all is well if ew reach here
                     var claims = new List<Claim>
                     {

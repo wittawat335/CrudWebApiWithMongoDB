@@ -10,7 +10,7 @@ namespace Crud.Core.DTOs
     {
         public string? Id { get; set; }
         public string? RoleCode { get; set; }
-        public string? RoleName { get; set; }
+        public string? Name { get; set; }
         public bool? IsActive { get; set; }
         public string? CreateBy { get; set; }
     }
