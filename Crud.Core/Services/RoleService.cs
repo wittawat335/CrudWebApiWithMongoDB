@@ -25,7 +25,7 @@ namespace Crud.Core.Services
             {
                 await _repository.InsertOneAsync(_mapper.Map<Role>(model));
                 response.IsSuccess = Constants.StatusData.True;
-                response.Message = Constants.Msg.Complete;
+                response.Message = Constants.Msg.InsertComplete;
             }
             catch
             {

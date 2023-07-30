@@ -37,13 +37,13 @@ namespace Crud.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("getById")]
-        public async Task<IActionResult> GetById(string id)
+        [HttpGet("getListByCreateBy")]
+        public IActionResult GetListByCreateBy(string filter)
         {
-            var response = new ResponseTable<ProductDTO>();
+            var response = new ResponseList<ProductDTO>();
             try
             {
-                response = await _service.GetByIdAsync(id);
+                response = _service.GetListByCreateBy(filter);
             }
             catch (Exception ex)
             {
@@ -60,7 +60,24 @@ namespace Crud.WebApi.Controllers
             var response = new ResponseTable<ProductDTO>();
             try
             {
-                response = await _service.GetAsync(code);
+                response = await _service.GetOneAsync(code);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var response = new ResponseTable<ProductDTO>();
+            try
+            {
+                response = await _service.GetByIdAsync(id);
             }
             catch (Exception ex)
             {
@@ -88,7 +105,7 @@ namespace Crud.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost("update")]
+        [HttpPut("update")]
         public async Task<IActionResult> Update(ProductDTO model)
         {
             var response = new Response();
@@ -105,13 +122,30 @@ namespace Crud.WebApi.Controllers
             return Ok(response);
         }
 
-        [HttpPost("delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete(string id)
         {
             var response = new Response();
             try
             {
                 response = await _service.DeleteByIdAsync(id);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpDelete("deleteListBy")]
+        public async Task<IActionResult> DeleteListByCreateBy(string text)
+        {
+            var response = new Response();
+            try
+            {
+                response = await _service.DeleteListAsyncByCreateBy(text);
             }
             catch (Exception ex)
             {

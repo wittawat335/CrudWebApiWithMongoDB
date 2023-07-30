@@ -26,7 +26,7 @@ namespace Crud.Core.Services
 
                 await _peopleRepository.InsertOneAsync(person);
                 response.IsSuccess = Constants.StatusData.True;
-                response.Message = Constants.Msg.Complete;
+                response.Message = Constants.Msg.InsertComplete;
             }
             catch
             {

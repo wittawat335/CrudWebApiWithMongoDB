@@ -7,10 +7,12 @@ namespace Crud.Core.Services.Contracts
     public interface IProductService
     {
         Task<ResponseList<ProductDTO>> GetAllAsync();
-        Task<ResponseTable<ProductDTO>> GetAsync(string code);
+        ResponseList<ProductDTO> GetListByCreateBy(string filter);
+        Task<ResponseTable<ProductDTO>> GetOneAsync(string code);
         Task<Response> AddAsync(Products model);
         Task<ResponseTable<ProductDTO>> GetByIdAsync(string id);
         Task<Response> UpdateAsync(ProductDTO model);
         Task<Response> DeleteByIdAsync(string id);
+        Task<Response> DeleteListAsyncByCreateBy(string text);
     }
 }

@@ -40,7 +40,25 @@ namespace Crud.Core.Services
 
             return response;
         }
-        public async Task<ResponseTable<ProductDTO>> GetAsync(string code)
+        public ResponseList<ProductDTO> GetListByCreateBy(string filter)
+        {
+            var response = new ResponseList<ProductDTO>();
+            try
+            {
+                var list = _repository.FilterBy(x => x.CreateBy == filter);
+                response.data = _mapper.Map<List<ProductDTO>>(list);
+                response.IsSuccess = Constants.StatusData.True;
+                response.Message = Constants.Msg.GetList;
+            }
+            catch
+            {
+                throw;
+            }
+
+            return response;
+        }
+
+        public async Task<ResponseTable<ProductDTO>> GetOneAsync(string code)
         {
             var response = new ResponseTable<ProductDTO>();
             try
@@ -79,7 +97,7 @@ namespace Crud.Core.Services
             {
                 await _repository.InsertOneAsync(model);
                 response.IsSuccess = Constants.StatusData.True;
-                response.Message = Constants.Msg.Complete;
+                response.Message = Constants.Msg.InsertComplete;
             }
             catch
             {
@@ -95,7 +113,7 @@ namespace Crud.Core.Services
             {
                 await _repository.ReplaceOneAsync(_mapper.Map<Products>(model));
                 response.IsSuccess = Constants.StatusData.True;
-                response.Message = Constants.Msg.Complete;
+                response.Message = Constants.Msg.UpdateComplete;
             }
             catch
             {
@@ -111,7 +129,25 @@ namespace Crud.Core.Services
             {
                 await _repository.DeleteByIdAsync(id);
                 response.IsSuccess = Constants.StatusData.True;
-                response.Message = Constants.Msg.Complete;
+                response.Message = Constants.Msg.DeleteComplete;
+            }
+            catch
+            {
+                throw;
+            }
+
+            return response;
+        }
+
+       
+        public async Task<Response> DeleteListAsyncByCreateBy(string text)
+        {
+            var response = new Response();
+            try
+            {
+                await _repository.DeleteManyAsync(x => x.CreateBy == text);
+                response.IsSuccess = Constants.StatusData.True;
+                response.Message = Constants.Msg.DeleteComplete;
             }
             catch
             {

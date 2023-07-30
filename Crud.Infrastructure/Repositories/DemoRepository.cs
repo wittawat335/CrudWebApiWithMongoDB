@@ -92,7 +92,7 @@ namespace Crud.Infrastructure.Repositories
         {
             InsertRecordResponse response = new InsertRecordResponse();
             response.IsSuccess = true;
-            response.Message = Constants.Msg.Complete;
+            response.Message = Constants.Msg.InsertComplete;
 
             try
             {
