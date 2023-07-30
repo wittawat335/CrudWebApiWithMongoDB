@@ -57,7 +57,6 @@ namespace Crud.Core.Services
 
             return response;
         }
-
         public async Task<ResponseTable<ProductDTO>> GetOneAsync(string code)
         {
             var response = new ResponseTable<ProductDTO>();
@@ -95,6 +94,9 @@ namespace Crud.Core.Services
             var response = new Response();
             try
             {
+                model.CreateBy = "Admin";
+                model.CreateDate = DateTime.Now;
+
                 await _repository.InsertOneAsync(model);
                 response.IsSuccess = Constants.StatusData.True;
                 response.Message = Constants.Msg.InsertComplete;

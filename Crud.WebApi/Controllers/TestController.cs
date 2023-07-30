@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase

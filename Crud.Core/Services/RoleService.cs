@@ -18,12 +18,12 @@ namespace Crud.Core.Services
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task<Response> AddRole(RoleDTO model)
+        public async Task<Response> AddRole(Role model)
         {
             var response = new Response();
             try
             {
-                await _repository.InsertOneAsync(_mapper.Map<Role>(model));
+                await _repository.InsertOneAsync(model);
                 response.IsSuccess = Constants.StatusData.True;
                 response.Message = Constants.Msg.InsertComplete;
             }

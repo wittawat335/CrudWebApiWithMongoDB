@@ -1,4 +1,5 @@
 ﻿using Crud.Core.DTOs;
+using Crud.Core.Model.MongoDB.Collections;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Crud.WebApi.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase
@@ -53,7 +54,7 @@ namespace Crud.WebApi.Controllers
         }
 
         [HttpPost("addRole")]
-        public async Task<IActionResult> AddRole(RoleDTO model)
+        public async Task<IActionResult> AddRole(Role model)
         {
             var response = new Response();
             try
