@@ -88,6 +88,16 @@ namespace Crud.WebApi.Controllers
             return Ok(response);
         }
 
+        //[HttpGet("getPeopleData")]
+        //public IEnumerable<string> GetPeopleData()
+        //{
+        //    var people = _peopleRepository.FilterBy(
+        //        filter => filter.FirstName != "rrr",
+        //        projection => projection.Id.ToString()
+        //    );
+        //    return people;
+        //}
+
         [HttpPost("add")]
         public async Task<IActionResult> Add(Products model)
         {

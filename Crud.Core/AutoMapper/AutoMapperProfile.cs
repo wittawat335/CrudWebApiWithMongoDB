@@ -10,12 +10,11 @@ namespace Crud.Core.AutoMapper
         public AutoMapperProfile()
         {
             #region Products
-            CreateMap<Products, ProductDTO>().ForMember(
-               x => x.Id,
-               opt => opt.MapFrom(origin => origin.Id.ToString()));
-            CreateMap<ProductDTO, Products>().ForMember(
-                x => x.Id,
-                opt => opt.MapFrom(origin => new ObjectId(origin.Id)));
+            CreateMap<Products, ProductDTO>() //Output 
+                .ForMember(x => x.Id, opt => opt.MapFrom(origin => origin.Id.ToString()));
+            CreateMap<ProductDTO, Products>() //Input
+                .ForMember(x => x.Id, opt => opt.MapFrom(origin => new ObjectId(origin.Id)))
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(origin => DateTime.Now));
             #endregion
 
         }

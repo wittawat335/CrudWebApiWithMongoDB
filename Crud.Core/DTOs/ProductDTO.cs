@@ -14,6 +14,6 @@ namespace Crud.Core.DTOs
         public int? Stock { get; set; }
         public bool? IsActive { get; set; }
         public string? CreateBy { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
     }
 }
