@@ -4,20 +4,19 @@ using Crud.Core.Model.MongoDB;
 using Crud.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDBSetting")); //Setting MongoDB
+//   from Infrastructure
 builder.Services.InjectDependence(builder.Configuration); // Infrastructure Config
-builder.Services.RegisterServices(); //Core Config
-builder.Services.MongoDbIdentityConfig(builder.Configuration); //Core Config
+
+//   from Core
+builder.Services.RegisterServices(); 
+builder.Services.MongoDbIdentityConfig(builder.Configuration); 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -27,7 +26,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

@@ -89,21 +89,19 @@ namespace Crud.Core.Services
             }
             return response;
         }
-        public async Task<Response> AddAsync(Products model)
+        public async Task<Response> AddAsync(ProductInput model)
         {
             var response = new Response();
             try
-            {
-                model.CreateBy = "Admin";
-                model.CreateDate = DateTime.Now;
-
-                await _repository.InsertOneAsync(model);
+            {               
+                await _repository.InsertOneAsync(_mapper.Map<Products>(model));
                 response.IsSuccess = Constants.StatusData.True;
                 response.Message = Constants.Msg.InsertComplete;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
             }
 
             return response;
@@ -113,13 +111,16 @@ namespace Crud.Core.Services
             var response = new Response();
             try
             {
-                await _repository.ReplaceOneAsync(_mapper.Map<Products>(model));
+                var findId = _repository.FindById(model.Id);
+
+                await _repository.ReplaceOneAsync(_mapper.Map(model, findId));
                 response.IsSuccess = Constants.StatusData.True;
                 response.Message = Constants.Msg.UpdateComplete;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
             }
 
             return response;
@@ -133,9 +134,10 @@ namespace Crud.Core.Services
                 response.IsSuccess = Constants.StatusData.True;
                 response.Message = Constants.Msg.DeleteComplete;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
             }
 
             return response;
@@ -151,9 +153,10 @@ namespace Crud.Core.Services
                 response.IsSuccess = Constants.StatusData.True;
                 response.Message = Constants.Msg.DeleteComplete;
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                response.IsSuccess = false;
+                response.Message = "Exception Occurs : " + ex.Message;
             }
 
             return response;

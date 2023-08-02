@@ -12,6 +12,7 @@ namespace Crud.Infrastructure
     {
         public static void InjectDependence(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<MongoDbSettings>(configuration.GetSection("MongoDBSetting"));
             services.AddSingleton<IMongoDbSettings>(serviceProvider =>
              serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 

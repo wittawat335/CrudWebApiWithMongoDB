@@ -15,6 +15,8 @@ namespace Crud.Core.AutoMapper
             CreateMap<ProductDTO, Products>() //Input
                 .ForMember(x => x.Id, opt => opt.MapFrom(origin => new ObjectId(origin.Id)))
                 .ForMember(x => x.CreateDate, opt => opt.MapFrom(origin => DateTime.Now));
+            CreateMap<ProductInput, Products>() //Input
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(origin => DateTime.Now));
             #endregion
 
         }
