@@ -5,7 +5,7 @@ using Crud.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 //   from Infrastructure
-builder.Services.InjectDependence(builder.Configuration); // Infrastructure Config
+builder.Services.InjectDependence(builder.Configuration); 
 
 //   from Core
 builder.Services.RegisterServices(); 
