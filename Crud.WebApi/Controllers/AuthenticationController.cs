@@ -20,6 +20,13 @@ namespace Crud.WebApi.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet("TestEnv")]
+        public IActionResult Index()
+        {
+            var value = _configuration.GetValue<string>("TestEnv");
+            return Ok(value);
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
