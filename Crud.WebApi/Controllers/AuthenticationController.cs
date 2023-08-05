@@ -2,6 +2,7 @@
 using Crud.Core.Model.MongoDB.Collections;
 using Crud.Core.Model.Response;
 using Crud.Core.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +30,8 @@ namespace Crud.WebApi.Controllers
             {
                 response = await _service.LoginAsync(request, key);
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
                 response.Message = ex.Message;
                 response.IsSuccess = false;
             }

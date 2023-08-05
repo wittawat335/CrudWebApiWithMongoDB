@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  crudDb:
+    image: mongo
+  crud.webapi:
+    image: ${DOCKER_REGISTRY-}crudwebapi
+    build:
+      context: .
+      dockerfile: Crud.WebApi/Dockerfile
+
+volumes:
+  mongo_data:    
+  

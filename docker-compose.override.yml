@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  crudDb:
+    container_name: catalogDB
+    restart: always
+    ports:
+      - 27017:27017
+  crud.webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - MongoDbSetting:ConnectionString=mongodb://crudDb:27017
+    depends_on:
+      - crudDb
+    ports:
+      - "8000:80"
+ 
