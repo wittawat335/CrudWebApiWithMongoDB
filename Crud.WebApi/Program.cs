@@ -4,7 +4,7 @@ using Crud.Core.Model.MongoDB;
 using Crud.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
-//   from Infrastructure
+//   from Infrastructure //
 builder.Services.InjectDependence(builder.Configuration);
 
 //   from Core
