@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 //   from Infrastructure //
 builder.Services.InjectDependence(builder.Configuration);
 
-//   from Core
+//   from Core //
 builder.Services.RegisterServices();
 builder.Services.MongoDbIdentityConfig(builder.Configuration);
 
